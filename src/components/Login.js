@@ -20,14 +20,19 @@ function Login() {
           'Content-Type': 'application/json'
         }
       });
-      console.log('====================================');
-      console.log(response.body);
-      console.log('====================================');
 
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);  // Save the token in localStorage
         alert('Login successful');
-        navigate('/');
+
+        // Fetch user profile
+        const profileResponse = await axios.get(`${base_url}/api/user/profile`, {
+          headers: {
+            'Authorization': `Bearer ${response.data.token}`
+          }
+        });
+
+        navigate('/home', { state: { user: profileResponse.data } });
       } else {
         throw new Error('No token received');
       }

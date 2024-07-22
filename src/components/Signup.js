@@ -26,10 +26,6 @@ const navigate = useNavigate();
         password,
       });
       alert('Signup successful');
-      console.log('====================================');
-      console.log(response);
-      console.log('====================================');
-      // Use navigate to redirect instead of history.push
     } catch (err) {
       setError('Signup failed. Please try again.');
     }
