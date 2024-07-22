@@ -4,6 +4,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Home from './components/Home';
 import LandingPage from './components/LandingPage';
+import Booking from './components/Booking';
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<LandingPage />} />
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/booking" element = {<Booking/>}/>
         </Routes>
       </div>
     </Router>

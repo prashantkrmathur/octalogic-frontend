@@ -32,7 +32,7 @@ function Login() {
           }
         });
         profileResponse.data.token = response.data.token
-        navigate('/home', { state: { user: profileResponse.data} });
+        navigate('/', { state: { user: profileResponse.data} });
       } else {
         throw new Error('No token received');
       }
