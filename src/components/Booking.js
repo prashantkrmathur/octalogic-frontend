@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
   Box, Button, Card, CardContent, CardMedia, Typography, TextField,
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  Container,
+  AppBar,
+  Toolbar,
+  Avatar
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -14,6 +18,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Logo from './assets/octalogic.svg';
 
 dayjs.extend(weekOfYear);
 dayjs.extend(customParseFormat);
@@ -74,10 +79,45 @@ function Booking() {
   const handleClose = () => {
     setOpen(false);
     navigate('/', { state: { user: userData} });
-};
+  };
+ const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/');
+  };
 
   return (
-    <Box>
+   <Container>
+    <AppBar position="static">
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <img src={Logo} alt="Logo" style={{ height: '40px' }} />
+          {userData && userData.user ? (
+            <Box display="flex" alignItems="center">
+              <Avatar src={userData.user.profilePic} alt="Profile" sx={{ marginRight: '10px' }} />
+              <Typography variant="h6" component="p" sx={{ marginRight: '20px' }}>
+                {userData.user.firstName} {userData.user.lastName}
+              </Typography>
+              <Button variant="contained" color="secondary" onClick={handleLogout}>
+                Logout
+              </Button>
+            </Box>
+          ) : (
+            <Box>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => navigate('/login')}
+                sx={{ marginRight: '10px' }}
+              >
+                Login
+              </Button>
+              <Button variant="contained" color="secondary" onClick={() => navigate('/signup')}>
+                Sign Up
+              </Button>
+            </Box>
+          )}
+        </Toolbar>
+      </AppBar>
+     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
         <Card sx={{ maxWidth: 345, m: 2 }}>
           <CardMedia
@@ -151,6 +191,7 @@ function Booking() {
         </DialogActions>
       </Dialog>
     </Box>
+   </Container>
   );
 }
 
